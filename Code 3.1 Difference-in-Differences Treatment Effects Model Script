@@ -1,0 +1,28 @@
+
+Code 3.1 Difference-in-Differences Treatment Effects Model Script
+
+import pandas as pd
+import statsmodels.api as sm
+
+# read in data from the excel sheet
+data = pd.read_excel(r'/Excel/File/Location/')
+
+# create a binary variable indicating post-treatment
+data['post'] = (data['time'] == 'post').astype(int)
+
+# create binary variables for the treatment groups
+group_dummies = pd.get_dummies(data['group'])
+data = pd.concat([data, group_dummies], axis=1)
+
+# specify the dependent variable and independent variables
+y = data['Variable1']
+X = data[['post', 'GroupB', 'GroupC', 'GroupD', 'GroupE',
+ 'covariate1', 'covariate2', 'covariate3', 'covariate4', 
+'covariate5',
+ 'covariate6', 'covariate7', 'covariate8']]
+
+# fit the linear regression model
+model = sm.OLS(y, X).fit()
+
+# print the summary of the regression results
+print(model.summary())
