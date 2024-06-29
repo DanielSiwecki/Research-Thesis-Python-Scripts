@@ -1,0 +1,56 @@
+Code 3.2 Difference-in-Differences Estimate Model Script
+
+import pandas as pd
+
+# list of sheet names to read from. Where each sheet contains Data for one 
+variable
+sheet_names = ['Sheet1', 'Sheet2', 'Sheet3', 'Sheet4', 'Sheet5', 'Sheet6', 
+'Sheet7', 'Sheet8', 'Sheet9', 'Sheet10', 'Sheet11', 'Sheet12', 'Sheet13', 
+'Sheet14', 'Sheet15', 'Sheet16', 'Sheet17', 'Sheet18', 'Sheet19', 
+'Sheet20', 'Sheet21',]
+
+# loop over sheet names and perform DiD analysis for each sheet
+for sheet_name in sheet_names:
+
+# read the DiD analysis output from an Excel file
+ did_output = pd.read_excel(r'/Excel/File/Location/', 
+sheet_name=sheet_name, index_col=0)
+
+# get the coefficient values for the post-treatment period and the 
+treatment groups
+ post_coef = did_output.loc['post', 'coef']
+ group_b_coef = did_output.loc['GroupB', 'coef']
+ group_c_coef = did_output.loc['GroupC', 'coef']
+ group_d_coef = did_output.loc['GroupD', 'coef']
+ group_e_coef = did_output.loc['GroupE', 'coef']
+
+# get the coefficient values for the covariates
+ covariate1_coef = did_output.loc['covariate1', 'coef']
+ covariate2_coef = did_output.loc['covariate2', 'coef']
+ covariate3_coef = did_output.loc['covariate3', 'coef']
+ covariate4_coef = did_output.loc['covariate4', 'coef']
+ covariate5_coef = did_output.loc['covariate5', 'coef']
+ covariate6_coef = did_output.loc['covariate6', 'coef']
+ covariate7_coef = did_output.loc['covariate7', 'coef']
+ covariate8_coef = did_output.loc['covariate8', 'coef']
+
+# calculate the DiD estimate for each group
+ group_b_did = post_coef + group_b_coef + covariate1_coef + 
+covariate2_coef + covariate3_coef + covariate4_coef + covariate5_coef + 
+covariate6_coef + covariate7_coef + covariate8_coef
+ group_c_did = post_coef + group_c_coef + covariate1_coef + 
+covariate2_coef + covariate3_coef + covariate4_coef + covariate5_coef + 
+covariate6_coef + covariate7_coef + covariate8_coef
+ group_d_did = post_coef + group_d_coef + covariate1_coef + 
+covariate2_coef + covariate3_coef + covariate4_coef + covariate5_coef + 
+covariate6_coef + covariate7_coef + covariate8_coef
+ group_e_did = post_coef + group_e_coef + covariate1_coef + 
+covariate2_coef + covariate3_coef + covariate4_coef + covariate5_coef + 
+covariate6_coef + covariate7_coef + covariate8_coef
+
+# print the DiD estimate for each group for this sheet
+ print('Sheet:', sheet_name)
+ print('DiD estimate for Group B:', group_b_did)
+ print('DiD estimate for Group C:', group_c_did)
+ print('DiD estimate for Group D:', group_d_did)
+ print('DiD estimate for Group E:', group_e_did)
